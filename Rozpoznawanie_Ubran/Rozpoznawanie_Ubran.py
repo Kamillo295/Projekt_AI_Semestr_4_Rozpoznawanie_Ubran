@@ -697,3 +697,6 @@ if __name__ == "__main__":
 # 5. Early Stopping
 #
 # ============================================================
+
+# pip uninstall torch torchvision torchaudio
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
