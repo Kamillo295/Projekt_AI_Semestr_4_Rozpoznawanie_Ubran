@@ -4,23 +4,6 @@ import torchvision
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 
-# ============================================================
-# PROGRAM TESTUJĄCY WYUCZONY MODEL
-# ============================================================
-#
-# Program:
-# 1. Wczytuje zapisany model
-# 2. Pobiera obrazki z Fashion MNIST
-# 3. Wyświetla obrazek
-# 4. Pokazuje przewidywaną klasę
-#
-# ============================================================
-
-
-# ============================================================
-# KLASY UBRAŃ
-# ============================================================
-
 classes = [
 
     "T-shirt/top",
@@ -35,12 +18,6 @@ classes = [
     "Ankle boot"
 ]
 
-
-# ============================================================
-# SIEĆ CNN
-#
-# MUSI być IDENTYCZNA jak w treningu
-# ============================================================
 
 class FashionCNN(nn.Module):
 
@@ -93,10 +70,6 @@ class FashionCNN(nn.Module):
         return x
 
 
-# ============================================================
-# GPU / CPU
-# ============================================================
-
 device = torch.device(
 
     "cuda" if torch.cuda.is_available() else "cpu"
@@ -104,10 +77,6 @@ device = torch.device(
 
 print(f"\nUrządzenie: {device}")
 
-
-# ============================================================
-# TRANSFORMACJE
-# ============================================================
 
 transform = transforms.Compose([
 
@@ -119,10 +88,6 @@ transform = transforms.Compose([
     )
 ])
 
-
-# ============================================================
-# POBRANIE DANYCH TESTOWYCH
-# ============================================================
 
 test_dataset = torchvision.datasets.FashionMNIST(
 
@@ -136,10 +101,6 @@ test_dataset = torchvision.datasets.FashionMNIST(
 )
 
 
-# ============================================================
-# WCZYTANIE MODELU
-# ============================================================
-
 model = FashionCNN().to(device)
 
 model.load_state_dict(
@@ -150,24 +111,12 @@ model.load_state_dict(
     )
 )
 
-# ============================================================
-# TRYB TESTOWANIA
-# ============================================================
-
 model.eval()
 
 print("\nModel został wczytany!\n")
 
 
-# ============================================================
-# GŁÓWNA PĘTLA
-# ============================================================
-
 while True:
-
-    # ========================================================
-    # LOSOWY OBRAZEK
-    # ========================================================
 
     random_index = torch.randint(
 
@@ -178,31 +127,13 @@ while True:
         (1,)
     ).item()
 
-    # ========================================================
-    # POBRANIE OBRAZKA
-    # ========================================================
-
     image, label = test_dataset[random_index]
 
-    # ========================================================
-    # MODEL OCZEKUJE BATCHA
-    #
-    # Dodajemy dodatkowy wymiar
-    # ========================================================
-
     image_for_model = image.unsqueeze(0).to(device)
-
-    # ========================================================
-    # WYŁĄCZENIE GRADIENTÓW
-    # ========================================================
 
     with torch.no_grad():
 
         outputs = model(image_for_model)
-
-        # ====================================================
-        # WYBÓR KLASY Z NAJWIĘKSZYM WYNIKIEM
-        # ====================================================
 
         _, predicted = torch.max(outputs, 1)
 
@@ -210,27 +141,13 @@ while True:
 
     real_class = classes[label]
 
-    # ========================================================
-    # WYŚWIETLENIE WYNIKÓW
-    # ========================================================
-
     print("===================================")
 
     print(f"Prawdziwa klasa: {real_class}")
 
     print(f"Model przewidział: {predicted_class}")
 
-    # ========================================================
-    # USUWANIE NORMALIZACJI
-    #
-    # Żeby obraz wyglądał poprawnie
-    # ========================================================
-
     image_to_show = image * 0.5 + 0.5
-
-    # ========================================================
-    # WYŚWIETLENIE OBRAZU
-    # ========================================================
 
     plt.imshow(
 
@@ -248,10 +165,6 @@ while True:
 
     plt.show()
 
-    # ========================================================
-    # KOLEJNY OBRAZEK?
-    # ========================================================
-
     answer = input(
 
         "\nPokazać kolejny obrazek? (t/n): "
@@ -261,9 +174,5 @@ while True:
 
         break
 
-
-# ============================================================
-# KONIEC
-# ============================================================
 
 print("\nProgram zakończony.")

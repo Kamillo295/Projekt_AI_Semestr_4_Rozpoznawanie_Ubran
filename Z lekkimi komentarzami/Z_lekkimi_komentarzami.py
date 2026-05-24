@@ -267,16 +267,10 @@ def main():
         epoch_loss = running_loss / len(train_loader)
 
         # accuracy treningowe
-        epoch_accuracy = (
-            correct_predictions / total_samples
-        ) * 100
+        epoch_accuracy = ( correct_predictions / total_samples ) * 100
 
         # test modelu
-        test_accuracy = evaluate_model(
-            model,
-            test_loader,
-            device
-        )
+        test_accuracy = evaluate_model( model, test_loader, device )
 
         # zapis najlepszego modelu
         if test_accuracy > best_accuracy:
