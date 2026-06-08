@@ -1,0 +1,2 @@
+Ocana z projektu: 5
+Temat: Rozpoznawanie ubrać za pomocą sieci CNN z datasetu Fashion_Mnist
